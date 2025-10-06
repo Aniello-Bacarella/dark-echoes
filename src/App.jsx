@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { EpisodeList } from "data";
-import "index.css";
+import { episodeList as episodeData } from "./data";
 
-function EpisodeList({ episodes, onSelect }) {
+function EpisodeListView({ episodes, onSelect }) {
   return (
-    <ul className="episode-list">
-      {episodes.map((ep) => (
-        <li key={ep.id} onClick={() => onSelect(ep)} className="episode-item">
-          {ep.name}
+    <ul>
+      {episodes.map((episode) => (
+        <li key={episode.id} onClick={() => onSelect(episode)}>
+          {episode.title}
         </li>
       ))}
     </ul>
@@ -16,26 +15,26 @@ function EpisodeList({ episodes, onSelect }) {
 
 function EpisodeDetails({ episode }) {
   return (
-    <div className="episode-details">
-      <h2>{episode.name}</h2>
-      <p>Episode #{episode.number}</p>
+    <div class="details">
+      <h2>{episode.title}</h2>
+      <p>Episode #{episode.id}</p>
       <p>{episode.description}</p>
     </div>
   );
 }
 
 function App() {
-  const [episodes] = useState(initialEpisodes);
+  const [episodes] = useState(episodeData);
   const [selectedEpisode, setSelectedEpisode] = useState(null);
 
   return (
-    <div className="app-container">
+    <div>
       <h1>Episode Explorer</h1>
-      <EpisodeList episodes={episodes} onSelect={setSelectedEpisode} />
+      <EpisodeListView episodes={episodes} onSelect={setSelectedEpisode} />
       {selectedEpisode ? (
         <EpisodeDetails episode={selectedEpisode} />
       ) : (
-        <p className="prompt">Please select an episode to see the details.</p>
+        <p>Please select an episode to see the details.</p>
       )}
     </div>
   );
